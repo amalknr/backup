@@ -1,0 +1,46 @@
+Q1.select count(department) as department_count,department from employee GROUP BY department HAVING count(department)=(select max(department_count) as department_count from (select count(department) as department_count from employee GROUP BY department)as subquery);
+
+
+Q2.select * from students left join marks on students.id=marks.student_id ;
+
+Q3.view maximam mark student from students and marks table
+
+select sum(marks) as total_marks,student_id,name from students join marks on students.id=marks.student_id GROUP BY student_id HAVING sum(marks)=(select max(total_marks) as marks from(select sum(marks) as total_marks,student_id from students join marks on students.id=marks.student_id GROUP BY student_id)as subquery);
+
+
+
+
+
+1.Find the Second Highest Salary in a Table
+
+select max(salary) as max_salary from salary where salary<(select max(salary) from salary);
+
+2.Find Employees Who Earn More Than the Average Salary
+
+select salary,id from salary where salary>(select avg(salary) from salary);
+
+3.Find Departments with More Than 3 Employees
+
+select count(department) as department_count,department from employee GROUP BY department HAVING count(department)>2;
+
+4.Find Employees Working in the Same Department as ‘John’
+
+select employee_name,department from employee where department=(select department from employee where employee_name="Alice") ;
+
+5.Find the Top 3 Highest Salaries in a Table.
+
+select salary,id from salary order by salary desc limit 3;
+
+6.Find Departments with Maximum and Minimum Employees.
+
+select count(department)as department_count,department from employee GROUP BY department HAVING count(department)=(select max(department_count)as department_count from (select count(department) as department_count from employee GROUP BY department)as subquery);
+
+select count(department)as department_count,department from employee GROUP BY department HAVING count(department)=(select min(department_count)as department_count from (select count(department) as department_count from employee GROUP BY department)as subquery);
+
+7.Find Duplicate Records in a Table.
+
+select count(department) as department_count,department from employee GROUP BY department HAVING count(department)>1;
+
+8.Find Employees Who Do Not Belong to Any Department.
+
+select employee_name from employee where department is null;
